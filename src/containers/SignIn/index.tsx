@@ -35,9 +35,9 @@ const SignInContainer: FC = memo(() => {
           sessionStorage.setItem("role", response.role);
 
           // Redirect to respective pages
-          if (response.role === "bpjs") {
+          if (response.role === "bpjs_admin") {
             replace("/bpjs");
-          } else if (response.role === "hospital") {
+          } else if (response.role === "hospital_admin") {
             replace("/hospitals");
           }
         })
