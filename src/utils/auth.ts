@@ -6,7 +6,6 @@ export const login = (email: string, password: string) => {
 
   return fetch(`${API_ROOT}/api/auth`, {
     method: "POST",
-    mode: "no-cors",
     headers: headers,
     body: JSON.stringify({ email, password }),
   });
