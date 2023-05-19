@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { PatientData } from './interface';
+import { PatientData } from '../../utils/interface';
 import { API_ROOT } from '@/src/utils/api';
 
 const BpjsContainer = () => {
     const [data, setData] = useState<PatientData[]>([]);
 
     useEffect(() => {
-        fetch(API_ROOT)
+        fetch(`{API_ROOT}/api/assets`)
             .then(response => response.json())
             .then(data => setData(data))
             .catch(err => console.error(err));
@@ -29,12 +29,14 @@ const BpjsContainer = () => {
                     {data.map((item, index) => (
                         <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {item.patientName}
+                                {item.Name}
                             </th>
-                            <td className="px-6 py-4">{item.gender}</td>
-                            <td className="px-6 py-4">{item.phoneNumber}</td>
-                            <td className="px-6 py-4">{item.dateOfBirth}</td>
-                            <td className="px-6 py-4">{item.description}</td>
+                            <td className="px-6 py-4">{item.Gender}</td>
+                            <td className="px-6 py-4">{item.PhoneNumber}</td>
+                            <td className="px-6 py-4">{item.DateOfBirth}</td>
+                            <td className="px-6 py-4">
+                                {`Address: ${item.Address}, Insurance: ${item.Insurance}, Medication: ${item.Medication.join(", ")}, Diagnosis: ${item.Diagnosis.join(", ")}`}
+                            </td>
                         </tr>
                     ))}
                 </tbody>

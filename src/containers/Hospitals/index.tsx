@@ -1,43 +1,40 @@
 import { API_ROOT } from "@/src/utils/api";
+import { submitPatientData } from "@/src/utils/submitData";
 import { useState } from "react";
 
 const BpjsContainer = () => {
     const [patientData, setPatientData] = useState({
-        name: '',
-        gender: '',
-        phoneNumber: '',
-        dateOfBirth: '',
-        description: ''
+      ID: '',
+      Name: '',
+      Gender: '',
+      DateOfBirth: '',
+      PhoneNumber: '',
+      Address: '',
+      Insurance: '',
+      Medication: [],
+      Diagnosis: []
+  });
+
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
+    submitPatientData(patientData)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("API response:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
-    
-      const handleSubmit = (event: { preventDefault: () => void; }) => {
-        event.preventDefault();
-        
-        fetch(API_ROOT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(patientData)
-        })
-          .then(response => response.json())
-          .then(data => {
-            // Handle the API response
-            console.log('API response:', data);
-          })
-          .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-          });
-      };
-    
-      const handleChange = (event: { target: { name: any; value: any; }; }) => {
-        const { name, value } = event.target;
-        setPatientData(prevData => ({
-          ...prevData,
-          [name]: value
-        }));
-      };
+  };
+
+  const handleChange = (event: { target: { name: any; value: any; }; }) => {
+      const { name, value } = event.target;
+      setPatientData(prevData => ({
+        ...prevData,
+        [name]: value
+      }));
+};
 
       
     return (
@@ -64,13 +61,21 @@ const BpjsContainer = () => {
                             <input onChange={handleChange} datepicker-autohide type="date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
                         </div>
                         <div className="sm:col-span-2">
-                            <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <textarea onChange={handleChange} id="description" rows={9} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tell your description here, such as medical and diagnosis histories"></textarea>
+                          <label htmlFor="insurance" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Insurance</label>
+                          <input onChange={handleChange} id="insurance" name="Insurance" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter insurance here" />
                         </div>
-                    </div>
-                    <button type="submit" className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                        Add Patient Data
-                    </button>
+                        <div className="sm:col-span-2">
+                          <label htmlFor="medication" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Medication</label>
+                          <input onChange={handleChange} id="medication" name="Medication" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter medication here" />
+                        </div>
+                        <div className="sm:col-span-2">
+                            <label htmlFor="diagnosis" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diagnosis</label>
+                            <input onChange={handleChange} id="diagnosis" name="Diagnosis" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter diagnosis here" />
+                        </div>
+                      </div>
+                      <button type="submit" className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                          Add Patient Data
+                      </button>
                 </form>
             </div>
         </section>
