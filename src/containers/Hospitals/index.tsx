@@ -1,8 +1,7 @@
-import { API_ROOT } from "@/src/utils/api";
 import { submitPatientData } from "@/src/utils/submitData";
 import { useState } from "react";
 
-const BpjsContainer = () => {
+const HospitalContainer = () => {
     const [patientData, setPatientData] = useState({
       ID: '',
       Name: '',
@@ -34,14 +33,13 @@ const BpjsContainer = () => {
         ...prevData,
         [name]: value
       }));
-};
-
-      
+};    
     return (
         <section className="min-h-screen bg-white dark:bg-gray-900">
             <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
                 <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">Welcome to SISDIS Hospital</h1>
                 <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new patient data</h2>
+
                 <form className="#" onSubmit={handleSubmit}>
                     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div className="w-full">
@@ -77,9 +75,10 @@ const BpjsContainer = () => {
                           Add Patient Data
                       </button>
                 </form>
+                
             </div>
         </section>
     );
 };
 
-export default BpjsContainer;
+export default HospitalContainer;

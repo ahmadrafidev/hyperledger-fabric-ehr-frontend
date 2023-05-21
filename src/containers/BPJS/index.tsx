@@ -6,7 +6,7 @@ const BpjsContainer = () => {
     const [data, setData] = useState<PatientData[]>([]);
 
     useEffect(() => {
-        fetch(`{API_ROOT}/api/assets`)
+        fetch(`${API_ROOT}/api/assets`)
             .then(response => response.json())
             .then(data => setData(data))
             .catch(err => console.error(err));
