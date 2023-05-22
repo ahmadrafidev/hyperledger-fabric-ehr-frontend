@@ -37,6 +37,9 @@ const HospitalContainer = () => {
         .then((data) => {
           console.log("API response:", data);
           window.alert(`Patient data for ${updatedPatient.Name} was successfully updated.`);
+          setData((prevData) =>
+            prevData.map((item) => (item.ID === updatedPatient.ID ? updatedPatient : item))
+          );
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -91,6 +94,7 @@ const HospitalContainer = () => {
 
     return (
         <section className="min-h-screen bg-white dark:bg-gray-900">
+            {/* CREATE EHR */}
             <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
                 <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">Welcome to SISDIS Hospital</h1>
                 <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new patient data</h2>
@@ -140,7 +144,7 @@ const HospitalContainer = () => {
                 </form>
                 
             </div>
-
+            {/* EDIT EHR */}
             <section>
               <div className="relative overflow-x-auto min-h-screen p-20 bg-white dark:bg-gray-900">
                 <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">Patient Data</h1>
