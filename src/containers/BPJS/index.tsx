@@ -31,13 +31,14 @@ const BpjsContainer = () => {
                         <th scope="col" className="px-6 py-3">Gender</th>
                         <th scope="col" className="px-6 py-3">Phone Number</th>
                         <th scope="col" className="px-6 py-3">Date of Birth</th>
+                        <th scope="col" className="px-6 py-3">Address</th>
                         <th scope="col" className="px-6 py-3">Insurance</th>
                         <th scope="col" className="px-6 py-3">Medication</th>
                         <th scope="col" className="px-6 py-3">Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data.map((item) => (
                         <tr key={item.ID} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {item.Name}
@@ -45,6 +46,7 @@ const BpjsContainer = () => {
                             <td className="px-6 py-4">{item.Gender === '1' ? 'Female': 'Male'}</td>
                             <td className="px-6 py-4">{item.PhoneNumber}</td>
                             <td className="px-6 py-4">{item.DateOfBirth}</td>
+                            <td className="px-6 py-4">{item.Address}</td>
                             <td className="px-6 py-4">{item.Insurance}</td>
                             <td className="px-6 py-4">{Array.isArray(item.Medication) ? item.Medication.join(', ') : item.Medication}</td>
                             <td className="px-6 py-4">{Array.isArray(item.Diagnosis) ? item.Diagnosis.join(', ') : item.Diagnosis}</td>
