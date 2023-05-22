@@ -2,15 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { PatientData } from '../../utils/interface';
 import { API_ROOT } from '@/src/utils/api';
 
+
 const BpjsContainer = () => {
     const [data, setData] = useState<PatientData[]>([]);
 
     useEffect(() => {
-        fetch(`${API_ROOT}/api/assets`)
+        const apiKey = sessionStorage.getItem('api-key')
+        if (apiKey) {
+            fetch(`${API_ROOT}/api/assets`, {
+                method: 'GET',
+                headers: {
+                    'x-api-key': apiKey
+                }
+            })
             .then(response => response.json())
             .then(data => setData(data))
             .catch(err => console.error(err));
-    }, []);
+        }
+    }, [data]);
 
     return (
         <div className="relative overflow-x-auto min-h-screen p-20 bg-white dark:bg-gray-900">
@@ -29,16 +38,16 @@ const BpjsContainer = () => {
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
-                        <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr key={item.ID} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {item.Name}
                             </th>
-                            <td className="px-6 py-4">{item.Gender}</td>
+                            <td className="px-6 py-4">{item.Gender === '1' ? 'Female': 'Male'}</td>
                             <td className="px-6 py-4">{item.PhoneNumber}</td>
                             <td className="px-6 py-4">{item.DateOfBirth}</td>
                             <td className="px-6 py-4">{item.Insurance}</td>
-                            <td className="px-6 py-4">{item.Medication}</td>
-                            <td className="px-6 py-4">{item.Diagnosis}</td>
+                            <td className="px-6 py-4">{item.Medication.join(', ')}</td>
+                            <td className="px-6 py-4">{item.Diagnosis.join(', ')}</td>
                         </tr>
                     ))}
                 </tbody>
