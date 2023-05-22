@@ -19,7 +19,7 @@ const BpjsContainer = () => {
             .then(data => setData(data))
             .catch(err => console.error(err));
         }
-    }, [data]);
+    }, []);
 
     return (
         <div className="relative overflow-x-auto min-h-screen p-20 bg-white dark:bg-gray-900">
@@ -46,8 +46,8 @@ const BpjsContainer = () => {
                             <td className="px-6 py-4">{item.PhoneNumber}</td>
                             <td className="px-6 py-4">{item.DateOfBirth}</td>
                             <td className="px-6 py-4">{item.Insurance}</td>
-                            <td className="px-6 py-4">{item.Medication.join(', ')}</td>
-                            <td className="px-6 py-4">{item.Diagnosis.join(', ')}</td>
+                            <td className="px-6 py-4">{Array.isArray(item.Medication) ? item.Medication.join(', ') : item.Medication}</td>
+                            <td className="px-6 py-4">{Array.isArray(item.Diagnosis) ? item.Diagnosis.join(', ') : item.Diagnosis}</td>
                         </tr>
                     ))}
                 </tbody>
