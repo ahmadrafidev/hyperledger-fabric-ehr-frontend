@@ -3,7 +3,6 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { logout } from "@/src/utils/auth";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 const Navbar = () => {
     const navigation = [

@@ -10,7 +10,7 @@ const HospitalContainer = () => {
     const [patientData, setPatientData] = useState<PatientData>({
         ID: "",
         Name: "",
-        Gender: 0,
+        Gender: "0",
         DateOfBirth: "",
         PhoneNumber: "",
         Address: "",
@@ -52,6 +52,7 @@ const HospitalContainer = () => {
                                 : item
                         )
                     );
+                    setSelectedPatient(null)
                 })
                 .catch((error) => {
                     console.error("Error:", error);
@@ -323,7 +324,7 @@ const HospitalContainer = () => {
                                             {item.Name}
                                         </th>
                                         <td className="px-6 py-4">
-                                            {item.Gender === 1
+                                            {item.Gender === "1"
                                                 ? "Female"
                                                 : "Male"}
                                         </td>
@@ -529,6 +530,12 @@ const HospitalContainer = () => {
                                             />
                                         </div>
                                     </div>
+                                    <button
+                                        onClick={() => {setSelectedPatient(null)}}
+                                        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 lg:mr-3"
+                                    >
+                                        Cancel
+                                    </button>
                                     <button
                                         type="submit"
                                         className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
