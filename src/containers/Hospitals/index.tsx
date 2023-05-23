@@ -53,6 +53,7 @@ const HospitalContainer = () => {
         .then((data) => {
           console.log("API response:", data);
           window.alert(`Patient data for ${updatedPatient.Name} was successfully created.`);
+          setData((prevData) => [...prevData, updatedPatient]);
         })
         .catch((error) => {
           console.error("Error:", error);
