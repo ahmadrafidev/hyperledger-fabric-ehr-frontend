@@ -8,7 +8,7 @@ const HospitalContainer = () => {
     const [patientData, setPatientData] = useState<PatientData>({
       ID: '',
       Name: '',
-      Gender: '',
+      Gender: 0,
       DateOfBirth: '',
       PhoneNumber: '',
       Address: '',
@@ -28,10 +28,11 @@ const HospitalContainer = () => {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    const updatedPatient = { ...patientData, ID: uuidv4()};
+    let updatedPatient: PatientData;
 
     if (selectedPatient) {
       // edit mode
+      updatedPatient = { ...patientData };
       updatePatientData(updatedPatient)
         .then((response) => response.json())
         .then((data) => {
@@ -46,6 +47,7 @@ const HospitalContainer = () => {
         });
     } else {
       //  create mode
+      updatedPatient = { ...patientData, ID: uuidv4() };
       submitPatientData({...updatedPatient, ID: uuidv4()})
         .then((response) => response.json())
         .then((data) => {
@@ -91,6 +93,7 @@ const HospitalContainer = () => {
   const handleEdit = (patient: PatientData) => {
     setSelectedPatient(patient);
   };
+  
 
     return (
         <section className="min-h-screen bg-white dark:bg-gray-900">
@@ -119,7 +122,7 @@ const HospitalContainer = () => {
                         </div>
                         <div className="w-full relative">
                             <label htmlFor="DateOfBirth" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
-                            <input onChange={handleChange} datepicker-autohide name="DateOfBirth" id="DateOfBirth" type="date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" required/>
+                            <input onChange={handleChange} datepicker-autohide="true" name="DateOfBirth" id="DateOfBirth" type="date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" required/>
                         </div>
                         <div className="sm:col-span-2">
                           <label htmlFor="Address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
@@ -168,7 +171,7 @@ const HospitalContainer = () => {
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {item.Name}
                                 </th>
-                                <td className="px-6 py-4">{item.Gender === '1' ? 'Female': 'Male'}</td>
+                                <td className="px-6 py-4">{item.Gender === 1 ? 'Female': 'Male'}</td>
                                 <td className="px-6 py-4">{item.PhoneNumber}</td>
                                 <td className="px-6 py-4">{item.DateOfBirth}</td>
                                 <td className="px-6 py-4">{item.Address}</td>
