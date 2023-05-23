@@ -35,36 +35,36 @@ const HospitalContainer = () => {
 
         let updatedPatient: PatientData;
 
-    if (selectedPatient) {
-      // edit mode
-      updatedPatient = { ...patientData };
-      updatePatientData(updatedPatient)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("API response:", data);
-          window.alert(`Patient data for ${updatedPatient.Name} was successfully updated.`);
-          setData((prevData) =>
-            prevData.map((item) => (item.ID === updatedPatient.ID ? updatedPatient : item))
-          );
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    } else {
-      //  create mode
-      updatedPatient = { ...patientData, ID: uuidv4() };
-      submitPatientData({...updatedPatient, ID: uuidv4()})
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("API response:", data);
-          window.alert(`Patient data for ${updatedPatient.Name} was successfully created.`);
-          setData((prevData) => [...prevData, updatedPatient]);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-  };
+        if (selectedPatient) {
+        // edit mode
+        updatedPatient = { ...patientData };
+        updatePatientData(updatedPatient)
+            .then((response) => response.json())
+            .then((data) => {
+            console.log("API response:", data);
+            window.alert(`Patient data for ${updatedPatient.Name} was successfully updated.`);
+            setData((prevData) =>
+                prevData.map((item) => (item.ID === updatedPatient.ID ? updatedPatient : item))
+            );
+            })
+            .catch((error) => {
+            console.error("Error:", error);
+            });
+        } else {
+        //  create mode
+        updatedPatient = { ...patientData, ID: uuidv4() };
+        submitPatientData({...updatedPatient, ID: uuidv4()})
+            .then((response) => response.json())
+            .then((data) => {
+            console.log("API response:", data);
+            window.alert(`Patient data for ${updatedPatient.Name} was successfully created.`);
+            setData((prevData) => [...prevData, updatedPatient]);
+            })
+            .catch((error) => {
+            console.error("Error:", error);
+            });
+        }
+    };
 
     const handleChange = (event: { target: { name: any; value: any } }) => {
         const { name, value } = event.target;
@@ -153,8 +153,8 @@ const HospitalContainer = () => {
                                     required
                                 >
                                     <option value="">Select Gender</option>
-                                    <option value="1">Female</option>
                                     <option value="0">Male</option>
+                                    <option value="1">Female</option>
                                 </select>
                             </div>
                             <div className="w-full">

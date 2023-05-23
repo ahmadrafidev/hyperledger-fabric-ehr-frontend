@@ -79,7 +79,7 @@ const BpjsContainer = () => {
                                     {item.Name}
                                 </th>
                                 <td className="px-6 py-4">
-                                    {item.Gender === 1 ? "Female" : "Male"}
+                                    {item.Gender === '1' ? "Female" : "Male"}
                                 </td>
                                 <td className="px-6 py-4">
                                     {item.PhoneNumber}
