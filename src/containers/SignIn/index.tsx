@@ -9,9 +9,9 @@ const SignInContainer: FC = memo(() => {
   useEffect(() => {
     // Handle if user already logged in
     const role = sessionStorage.getItem("role");
-    if (role === "bpjs") {
+    if (role === "bpjs_admin") {
       replace("/bpjs");
-    } else if (role === "hospital") {
+    } else if (role === "hospital_admin") {
       replace("/hospitals");
     }
   }, [replace]);
