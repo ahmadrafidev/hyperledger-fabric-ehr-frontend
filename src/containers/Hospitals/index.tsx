@@ -4,6 +4,7 @@ import { PatientData } from "@/src/utils/interface";
 import { submitPatientData, updatePatientData } from "@/src/utils/submitData";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/router";
 
 const HospitalContainer = () => {
     const [patientData, setPatientData] = useState<PatientData>({
@@ -21,6 +22,7 @@ const HospitalContainer = () => {
     const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(
         null
     );
+    const router = useRouter()
 
     useEffect(() => {
         if (selectedPatient) {
@@ -87,8 +89,15 @@ const HospitalContainer = () => {
     };
 
     useEffect(() => {
-        const apiKey = sessionStorage.getItem("api-key");
-        if (apiKey) {
+        const role = sessionStorage.getItem('role')
+        const apiKey = sessionStorage.getItem('api-key')
+        if (role === "hospital_admin") {
+            router.push("/hospitals");
+        }
+        if (!apiKey) {
+            router.push("/sign-in");
+        }
+        else {
             fetch(`${API_ROOT}/api/assets`, {
                 method: "GET",
                 headers: {
@@ -99,7 +108,7 @@ const HospitalContainer = () => {
                 .then((data) => setData(data))
                 .catch((err) => console.error(err));
         }
-    }, []);
+    }, [router]);
 
     const handleEdit = (patient: PatientData) => {
         setSelectedPatient(patient);
