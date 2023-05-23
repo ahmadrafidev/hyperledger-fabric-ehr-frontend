@@ -46,6 +46,7 @@ const HospitalContainer = () => {
             setData((prevData) =>
                 prevData.map((item) => (item.ID === updatedPatient.ID ? updatedPatient : item))
             );
+            setSelectedPatient(null);
             })
             .catch((error) => {
             console.error("Error:", error);
