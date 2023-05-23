@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { logout } from "@/src/utils/auth";
@@ -8,6 +8,14 @@ const Navbar = () => {
     const navigation = [
         { name: "Hospital Dashboard", href: "#", current: true },
     ];
+    const [role, setRole] = useState("hospital_admin")
+
+    useEffect(() => {
+        const actualRole = sessionStorage.getItem("role")
+        if (actualRole) {
+            setRole(actualRole)
+        }
+    }, [setRole])
 
     const router = useRouter();
 
@@ -15,7 +23,7 @@ const Navbar = () => {
         return classes.filter(Boolean).join(" ");
     }
     return (
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-gray-200 dark:bg-gray-800 dark:text-white">
             {({ open }) => (
                 <>
                     <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -42,15 +50,16 @@ const Navbar = () => {
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
                                     <img
-                                        className="block h-8 w-auto lg:hidden"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                        alt="Your Company"
+                                        className="block h-14 w-auto lg:hidden"
+                                        src={role === "bpjs_admin" ? "/bpjs.png" : "/hospital.png"}
+                                        alt="Hospital Logo"
                                     />
                                     <img
-                                        className="hidden h-8 w-auto lg:block"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                        alt="Your Company"
+                                        className="hidden w-auto lg:block h-20"
+                                        src={role === "bpjs_admin" ? "/bpjs.png" : "/hospital.png"}
+                                        alt="Hospital Logo"
                                     />
+                                    <p className="text-xl">Dashboard {role === "bpjs_admin" ? "BPJS" : "Hospital"}</p>
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block"></div>
                             </div>
@@ -87,7 +96,7 @@ const Navbar = () => {
                                         leaveFrom="transform opacity-100 scale-100"
                                         leaveTo="transform opacity-0 scale-95"
                                     >
-                                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <a

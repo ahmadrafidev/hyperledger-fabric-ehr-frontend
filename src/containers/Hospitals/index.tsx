@@ -36,34 +36,42 @@ const HospitalContainer = () => {
         let updatedPatient: PatientData;
 
         if (selectedPatient) {
-        // edit mode
-        updatedPatient = { ...patientData };
-        updatePatientData(updatedPatient)
-            .then((response) => response.json())
-            .then((data) => {
-            console.log("API response:", data);
-            window.alert(`Patient data for ${updatedPatient.Name} was successfully updated.`);
-            setData((prevData) =>
-                prevData.map((item) => (item.ID === updatedPatient.ID ? updatedPatient : item))
-            );
-            setSelectedPatient(null);
-            })
-            .catch((error) => {
-            console.error("Error:", error);
-            });
+            // edit mode
+            updatedPatient = { ...patientData };
+            updatePatientData(updatedPatient)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("API response:", data);
+                    window.alert(
+                        `Patient data for ${updatedPatient.Name} was successfully updated.`
+                    );
+                    setData((prevData) =>
+                        prevData.map((item) =>
+                            item.ID === updatedPatient.ID
+                                ? updatedPatient
+                                : item
+                        )
+                    );
+                    setSelectedPatient(null);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
         } else {
-        //  create mode
-        updatedPatient = { ...patientData, ID: uuidv4() };
-        submitPatientData({...updatedPatient, ID: uuidv4()})
-            .then((response) => response.json())
-            .then((data) => {
-            console.log("API response:", data);
-            window.alert(`Patient data for ${updatedPatient.Name} was successfully created.`);
-            setData((prevData) => [...prevData, updatedPatient]);
-            })
-            .catch((error) => {
-            console.error("Error:", error);
-            });
+            //  create mode
+            updatedPatient = { ...patientData, ID: uuidv4() };
+            submitPatientData({ ...updatedPatient, ID: uuidv4() })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("API response:", data);
+                    window.alert(
+                        `Patient data for ${updatedPatient.Name} was successfully created.`
+                    );
+                    setData((prevData) => [...prevData, updatedPatient]);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
         }
     };
 
@@ -110,14 +118,14 @@ const HospitalContainer = () => {
     return (
         <>
             <Navbar />
-            <section className="min-h-screen bg-white dark:bg-gray-900">
+            <section className="min-h-screen dark:bg-gray-900">
+                <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white animate__animated animate__fadeIn">
+                    Welcome back Hospital Admin!
+                </h1>
                 {/* CREATE EHR */}
-                <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">
-                        Welcome to SISDIS Hospital
-                    </h1>
+                <div className="py-8 px-4 mx-auto max-w-2xl lg:py-4 border rounded-md animate__animated animate__zoomIn">
                     <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                        Add a new patient data
+                        Add a new EHR data
                     </h2>
 
                     <form onSubmit={handleSubmit}>
@@ -262,7 +270,7 @@ const HospitalContainer = () => {
                             type="submit"
                             className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
                         >
-                            Add Patient Data
+                            Add EHR Data
                         </button>
                     </form>
                 </div>
@@ -270,7 +278,7 @@ const HospitalContainer = () => {
                 <section>
                     <div className="relative overflow-x-auto min-h-screen p-20 bg-white dark:bg-gray-900">
                         <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">
-                            Patient Data
+                            EHR Data
                         </h1>
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 rounded-lg">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -345,7 +353,7 @@ const HospitalContainer = () => {
                                         </td>
                                         <button
                                             onClick={() => handleEdit(item)}
-                                            className="text-indigo-600 hover:text-indigo-900"
+                                            className="text-indigo-600 hover:text-indigo-900 duration-300 mt-5"
                                         >
                                             Edit
                                         </button>
@@ -354,7 +362,7 @@ const HospitalContainer = () => {
                             </tbody>
                         </table>
                         {selectedPatient && (
-                            <div className="p-4 mt-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                            <div className="p-4 mt-4 bg-gray-100 dark:bg-gray-800 rounded-lg animate__animated animate__fadeInLeft">
                                 <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
                                     Edit Patient Data
                                 </h2>
@@ -524,16 +532,18 @@ const HospitalContainer = () => {
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => {setSelectedPatient(null)}}
-                                        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 lg:mr-3"
+                                        onClick={() => {
+                                            setSelectedPatient(null);
+                                        }}
+                                        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-red-400 duration-300 lg:mr-3"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                                        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-500 duration-300"
                                     >
-                                        Edit Patient Data
+                                        Edit EHR Data
                                     </button>
                                 </form>
                             </div>
