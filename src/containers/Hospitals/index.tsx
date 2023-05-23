@@ -22,7 +22,7 @@ const HospitalContainer = () => {
     const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(
         null
     );
-    const router = useRouter()
+    const router = useRouter();
 
     useEffect(() => {
         if (selectedPatient) {
@@ -89,15 +89,14 @@ const HospitalContainer = () => {
     };
 
     useEffect(() => {
-        const role = sessionStorage.getItem('role')
-        const apiKey = sessionStorage.getItem('api-key')
+        const role = sessionStorage.getItem("role");
+        const apiKey = sessionStorage.getItem("api-key");
         if (role === "hospital_admin") {
             router.push("/hospitals");
         }
         if (!apiKey) {
             router.push("/sign-in");
-        }
-        else {
+        } else {
             fetch(`${API_ROOT}/api/assets`, {
                 method: "GET",
                 headers: {
@@ -108,7 +107,7 @@ const HospitalContainer = () => {
                 .then((data) => setData(data))
                 .catch((err) => console.error(err));
         }
-    }, [router]);
+    }, []);
 
     const handleEdit = (patient: PatientData) => {
         setSelectedPatient(patient);
