@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PatientData } from '../../utils/interface';
 import { API_ROOT } from '@/src/utils/api';
+import Navbar from '@/components/Navbar';
 
 
 const BpjsContainer = () => {
@@ -22,6 +23,8 @@ const BpjsContainer = () => {
     }, []);
 
     return (
+        <>
+        <Navbar />
         <div className="relative overflow-x-auto min-h-screen p-20 bg-white dark:bg-gray-900">
             <h1 className="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">BPJS Insurance</h1>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -43,7 +46,7 @@ const BpjsContainer = () => {
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {item.Name}
                             </th>
-                            <td className="px-6 py-4">{item.Gender === '1' ? 'Female': 'Male'}</td>
+                            <td className="px-6 py-4">{item.Gender === 1 ? 'Female': 'Male'}</td>
                             <td className="px-6 py-4">{item.PhoneNumber}</td>
                             <td className="px-6 py-4">{item.DateOfBirth}</td>
                             <td className="px-6 py-4">{item.Address}</td>
@@ -55,6 +58,7 @@ const BpjsContainer = () => {
                 </tbody>
             </table>
         </div>
+        </>
     );
 };
 

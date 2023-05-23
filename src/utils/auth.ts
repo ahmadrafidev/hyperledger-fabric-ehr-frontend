@@ -10,3 +10,8 @@ export const login = (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   });
 };
+
+export const logout = () => {
+  sessionStorage.removeItem('role')
+  sessionStorage.removeItem('api-key')
+}
