@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { API_ROOT } from "@/src/utils/api";
-import { PatientData } from "@/src/utils/interface";
+import { PatientData, PatientDataActual } from "@/src/utils/interface";
 import { submitPatientData, updatePatientData } from "@/src/utils/submitData";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -15,8 +15,8 @@ const HospitalContainer = () => {
         PhoneNumber: "",
         Address: "",
         Insurance: "",
-        Medication: [],
-        Diagnosis: [],
+        Medication: "",
+        Diagnosis: "",
     });
     const [data, setData] = useState<PatientData[]>([]);
     const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(
@@ -33,11 +33,13 @@ const HospitalContainer = () => {
     const handleSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        let updatedPatient: PatientData;
+        let updatedPatient: any;
 
         if (selectedPatient) {
             // edit mode
             updatedPatient = { ...patientData };
+            updatedPatient['Diagnosis'] = updatedPatient['Diagnosis'].split(",")
+            updatedPatient['Medication'] = updatedPatient['Medication'].split(",")
             updatePatientData(updatedPatient)
                 .then((response) => response.json())
                 .then((data) => {
@@ -60,6 +62,8 @@ const HospitalContainer = () => {
         } else {
             //  create mode
             updatedPatient = { ...patientData, ID: uuidv4() };
+            updatedPatient['Diagnosis'] = updatedPatient['Diagnosis'].split(",")
+            updatedPatient['Medication'] = updatedPatient['Medication'].split(",")
             submitPatientData({ ...updatedPatient, ID: uuidv4() })
                 .then((response) => response.json())
                 .then((data) => {
@@ -77,17 +81,17 @@ const HospitalContainer = () => {
 
     const handleChange = (event: { target: { name: any; value: any } }) => {
         const { name, value } = event.target;
-        if (name === "Medication" || name === "Diagnosis") {
-            setPatientData((prevData) => ({
-                ...prevData,
-                [name]: value.split(","),
-            }));
-        } else {
-            setPatientData((prevData) => ({
-                ...prevData,
-                [name]: value,
-            }));
-        }
+        // if (name === "Medication" || name === "Diagnosis") {
+        //     setPatientData((prevData) => ({
+        //         ...prevData,
+        //         [name]: value.split(","),
+        //     }));
+        // } else {
+        setPatientData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+        // }
     };
 
     useEffect(() => {
@@ -342,14 +346,16 @@ const HospitalContainer = () => {
                                             {item.Insurance}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {Array.isArray(item.Medication)
+                                            {item.Medication}
+                                            {/* {Array.isArray(item.Medication)
                                                 ? item.Medication.join(", ")
-                                                : item.Medication}
+                                                : item.Medication} */}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {Array.isArray(item.Diagnosis)
+                                            {item.Diagnosis}
+                                            {/* {Array.isArray(item.Diagnosis)
                                                 ? item.Diagnosis.join(", ")
-                                                : item.Diagnosis}
+                                                : item.Diagnosis} */}
                                         </td>
                                         <button
                                             onClick={() => handleEdit(item)}
